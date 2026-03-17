@@ -1,11 +1,11 @@
-const API_URL = import.meta.env.VITE_API_URL || 'https://restcountries.com/v3.1';
+import { API_URL, HOME_FIELDS, BORDER_FIELDS } from '@/utils/constants';
 
 export const countriesService = {
   /**
    * Fetches all countries with specific fields optimized for the home list.
    */
   getAllCountries: () => {
-    return fetch(`${API_URL}/all?fields=name,flag,flags,region,population,cca3,currencies,languages,translations`)
+    return fetch(`${API_URL}/all?fields=${HOME_FIELDS}`)
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch countries');
         return res.json();
@@ -34,7 +34,7 @@ export const countriesService = {
    */
   getBorderCountriesByCodes: (codesArray) => {
     const borderCodes = codesArray.join(',');
-    return fetch(`${API_URL}/alpha?codes=${borderCodes}&fields=name,cca3,translations`)
+    return fetch(`${API_URL}/alpha?codes=${borderCodes}&fields=${BORDER_FIELDS}`)
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch border countries');
         return res.json();

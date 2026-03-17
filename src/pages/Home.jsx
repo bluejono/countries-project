@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from "@/components/ui/card";
 import CardNav from '@/components/ui/CardNav';
@@ -7,8 +7,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useTranslation } from 'react-i18next';
 import SplitText from '@/components/ui/SplitText';
 import BlurText from '@/components/ui/BlurText';
-import { countriesService } from '@/api/countriesService';
 import { getCountryName } from '@/utils/formatters';
+import { ITEMS_PER_LOAD } from '@/utils/constants';
+import { useCountries } from '@/context/CountriesContext';
 import Footer from '@/components/Footer/Footer';
 import NotFound from '@/components/NotFound/NotFound';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -16,30 +17,11 @@ import './Home.css';
 
 function Home() {
   const { t, i18n } = useTranslation();
-  const [countries, setCountries] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [visibleCount, setVisibleCount] = useState(12);
+  const { countries, isLoading, error } = useCountries();
+  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_LOAD);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCurrency, setSelectedCurrency] = useState('all');
   const [selectedLanguage, setSelectedLanguage] = useState('all');
-  const ITEMS_PER_LOAD = 12;
-
-  useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const data = await countriesService.getAllCountries();
-        const sortedData = data.sort((a, b) => a.name.common.localeCompare(b.name.common));
-        setCountries(sortedData);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchCountries();
-  }, []);
 
   const { currencies, languages } = useMemo(() => {
     const curSet = new Set();
