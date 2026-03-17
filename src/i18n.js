@@ -22,7 +22,7 @@ i18n
           },
           intro: {
             title: 'Olá, mundo!',
-            body1: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ullam pariatur ipsam reiciendis distinctio iste corporis voluptate, vel et dolor porro. Blanditiis quibusdam molestias magnam architecto similique, minus beatae explicabo praesentium! Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae debitis, sed, perferendis illo repudiandae ad libero nulla cupiditate minima ipsum quod. Quas repellendus vel dolores sed mollitia commodi unde animi! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime nemo eveniet dolorum nam modi dolor ab similique! Doloremque corrupti assumenda, officia fugit officiis totam nam unde quos, laboriosam culpa doloribus? Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit, quidem eum, recusandae ullam magnam sit ad praesentium vitae ea quam earum adipisci iusto quos tenetur totam velit dolore saepe architecto?',
+            body1: 'Este projeto foi criado para explorar o mundo com uma experiência simples, rápida e bonita, além de ser um teste e prova para mim mesmo que tudo é possível com muita perseverança. Aqui você pode buscar países, filtrar por idioma e moeda e abrir os detalhes para entender melhor cada lugar — tudo consumindo dados da Rest Countries API. Um agradecimento especial à equipe da TripleTen pela orientação ao longo do desenvolvimento e por incentivar boas práticas, organização e evolução. Espero que após todo o processo, eu consiga realizar meu sonho de entrar no fascinante mundo da tecnologia que tanto amo!',
             button: 'Ir para o app',
           },
           home: {
@@ -71,7 +71,7 @@ i18n
           },
           intro: {
             title: 'Hello, world!',
-            body1: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ullam pariatur ipsam reiciendis distinctio iste corporis voluptate, vel et dolor porro. Blanditiis quibusdam molestias magnam architecto similique, minus beatae explicabo praesentium! Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae debitis, sed, perferendis illo repudiandae ad libero nulla cupiditate minima ipsum quod. Quas repellendus vel dolores sed mollitia commodi unde animi! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime nemo eveniet dolorum nam modi dolor ab similique! Doloremque corrupti assumenda, officia fugit officiis totam nam unde quos, laboriosam culpa doloribus? Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit, quidem eum, recusandae ullam magnam sit ad praesentium vitae ea quam earum adipisci iusto quos tenetur totam velit dolore saepe architecto?',
+            body1: 'This project was created to explore the world with a simple, fast, and beautiful experience, and also as a test and a reminder to myself that anything is possible with perseverance. Here you can search for countries, filter by language and currency, and open the details to better understand each place — all powered by the Rest Countries API. Special thanks to the TripleTen team for their guidance throughout the development process and for encouraging best practices, organization, and growth. I hope that after this whole journey, I can achieve my dream of entering the fascinating world of technology that I love so much!',
             button: 'Go to the app',
           },
           home: {

@@ -100,12 +100,14 @@ function Home() {
         items={navItems}
       />
       <div className='bg-neutral-950 min-h-screen flex flex-col items-center text-white p-10 gap-10 min-h-screen pt-24 selection:bg-neutral-800'>
-        <h1 className="text-4xl font-bold mt-10 tracking-tight text-center">
-          <SplitText key={t('home.title')} text={t('home.title')} initialDelay={400} />
-        </h1>
-        <p className="text-xl max-w-2xl text-center text-neutral-400 font-light">
-          <BlurText key={t('home.subtitle')} text={t('home.subtitle')} initialDelay={800} delay={40} />
-        </p>
+        <div className="mt-14 flex flex-col items-center gap-3 text-center">
+          <h1 className="text-4xl font-bold tracking-tight">
+            <SplitText key={t('home.title')} text={t('home.title')} initialDelay={400} />
+          </h1>
+          <p className="text-xl max-w-2xl text-neutral-400 font-light">
+            <BlurText key={t('home.subtitle')} text={t('home.subtitle')} initialDelay={800} delay={40} />
+          </p>
+        </div>
 
         <div className="w-full max-w-4xl flex flex-col items-center gap-4 mt-8">
           <div className="relative w-full">
