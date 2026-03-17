@@ -1,16 +1,136 @@
-# React + Vite
+<h1 align="center">
+  <img src="public/favicon.svg" width="40" alt="GeoWorld logo" />
+  <br/>
+  GeoWorld
+</h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+  Explore informações detalhadas sobre todos os países do mundo.
+  <br/>
+  Filtre por moeda, idioma, busque por nome e veja detalhes como capital, população, fronteiras e muito mais.
+</p>
 
-Currently, two official plugins are available:
+<p align="center">
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react&logoColor=white" />
+  <img src="https://img.shields.io/badge/Vite-7-646CFF?style=flat&logo=vite&logoColor=white" />
+  <img src="https://img.shields.io/badge/Tailwind-4-06B6D4?style=flat&logo=tailwindcss&logoColor=white" />
+  <img src="https://img.shields.io/badge/i18n-PT%20%7C%20EN-green?style=flat" />
+</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Funcionalidades
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🌍 Lista todos os países do mundo com bandeira, nome e código
+- 🔍 Busca por nome (PT ou EN)
+- 🏦 Filtro por moeda
+- 🗣️ Filtro por idioma
+- 📄 Página de detalhes com capital, região, população, moedas, idiomas, TLD e fronteiras clicáveis
+- 🌐 Internacionalização completa (Português / Inglês)
+- 💀 Skeleton loader durante o carregamento
+- ➕ Botão "Mostrar mais" para carregamento progressivo
+- 📱 Layout totalmente responsivo
 
-## Expanding the ESLint configuration
+## Tecnologias
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Categoria | Tecnologia |
+|---|---|
+| Framework | React 19 + Vite 7 |
+| Estilização | Tailwind CSS 4 + shadcn/ui |
+| Roteamento | React Router DOM 7 |
+| Internacionalização | i18next + react-i18next |
+| Animações | GSAP 3 |
+| API | [REST Countries](https://restcountries.com) (Fetch nativo) |
+| Normalização CSS | normalize.css |
+| Fontes | Inter (WOFF2, local) |
+
+## Estrutura do projeto
+
+```
+src/
+├── api/
+│   └── countriesService.js   # Camada de chamadas à API REST Countries
+├── components/
+│   ├── Footer/               # Footer.jsx + Footer.css
+│   ├── NotFound/             # NotFound.jsx + NotFound.css
+│   ├── Preloader/            # Preloader.jsx + Preloader.css
+│   └── ui/                   # Componentes shadcn/ui e customizados
+├── context/
+│   └── CountriesContext.jsx  # Context global com dados de todos os países
+├── fonts/                    # Fontes Inter WOFF2 locais
+├── images/                   # Imagens do projeto
+├── pages/
+│   ├── Details.jsx / .css    # Página de detalhes do país
+│   ├── Home.jsx / .css       # Página principal com lista e filtros
+│   └── Intro.jsx             # Página de introdução
+├── utils/
+│   ├── constants.js          # Constantes globais (API_URL, ITEMS_PER_LOAD…)
+│   └── formatters.js         # Helpers puros (getCountryName)
+├── App.jsx                   # Rotas + CountriesProvider
+├── i18n.js                   # Configuração de internacionalização
+└── index.css                 # Estilos globais + @font-face
+```
+
+## Como executar
+
+### Pré-requisitos
+
+- Node.js 18+
+- npm
+
+### Instalação
+
+```bash
+# Clone o repositório
+git clone https://github.com/bluejono/countries-project.git
+cd countries-project
+
+# Instale as dependências
+npm install
+
+# Configure as variáveis de ambiente
+cp .env.example .env
+```
+
+### Variáveis de ambiente
+
+Crie um arquivo `.env` na raiz do projeto (use o `.env.example` como base):
+
+```env
+VITE_API_URL=https://restcountries.com/v3.1
+```
+
+### Desenvolvimento
+
+```bash
+npm run dev
+```
+
+Acesse [http://localhost:5173](http://localhost:5173)
+
+### Build de produção
+
+```bash
+npm run build
+npm run preview
+```
+
+## Páginas
+
+| Rota | Descrição |
+|---|---|
+| `/` | Página de introdução |
+| `/home` | Lista de países com busca e filtros |
+| `/details/:id` | Detalhes completos de um país |
+
+## Internacionalização
+
+O idioma é detectado automaticamente pelo navegador. Para alternar manualmente, use o seletor na barra de navegação.
+
+Idiomas suportados: **Português (PT-BR)** e **Inglês (EN)**
+
+---
+
+<p align="center">
+  Dados fornecidos por <a href="https://restcountries.com">REST Countries API</a>
+</p>
