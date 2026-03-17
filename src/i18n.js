@@ -36,7 +36,9 @@ i18n
             loading: 'Carregando países...',
             error_title: 'Ops! Algo deu errado.',
             not_found_title: 'Nada encontrado',
-            not_found_desc: 'Nenhum país encontrado para "{{query}}".'
+            not_found_desc: 'Nenhum país encontrado para "{{query}}".',
+            show_more: 'Mostrar mais',
+            countries_shown: 'países exibidos'
           },
           details: {
             title: 'Detalhes de',
@@ -83,7 +85,9 @@ i18n
             loading: 'Loading countries...',
             error_title: 'Whoops! Something went wrong.',
             not_found_title: 'Nothing found',
-            not_found_desc: 'No countries found for "{{query}}".'
+            not_found_desc: 'No countries found for "{{query}}".',
+            show_more: 'Show more',
+            countries_shown: 'countries shown'
           },
           details: {
             title: 'Details of',

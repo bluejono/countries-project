@@ -1,47 +1,27 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious, PaginationEllipsis } from "@/components/ui/pagination";
+import { Card } from "@/components/ui/card";
 import CardNav from '@/components/ui/CardNav';
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useTranslation } from 'react-i18next';
 import SplitText from '@/components/ui/SplitText';
 import BlurText from '@/components/ui/BlurText';
-import { countriesService } from '@/api/countriesService';
 import { getCountryName } from '@/utils/formatters';
+import { ITEMS_PER_LOAD } from '@/utils/constants';
+import { useCountries } from '@/context/CountriesContext';
 import Footer from '@/components/Footer/Footer';
 import NotFound from '@/components/NotFound/NotFound';
 import { Skeleton } from '@/components/ui/skeleton';
+import './Home.css';
 
 function Home() {
   const { t, i18n } = useTranslation();
-  const [countries, setCountries] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  const { countries, isLoading, error } = useCountries();
+  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_LOAD);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCurrency, setSelectedCurrency] = useState('all');
   const [selectedLanguage, setSelectedLanguage] = useState('all');
-  const itemsPerPage = 15;
-
-  useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const data = await countriesService.getAllCountries();
-        // Sort alphabetically by English common name initially
-        // We will sort dynamically during render if needed, or stick to this stable sort
-        const sortedData = data.sort((a, b) => a.name.common.localeCompare(b.name.common));
-        setCountries(sortedData);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchCountries();
-  }, []);
 
   const { currencies, languages } = useMemo(() => {
     const curSet = new Set();
@@ -63,7 +43,7 @@ function Home() {
   const filteredCountries = useMemo(() => {
     return countries.filter(c => {
       const displayName = getCountryName(c, i18n.language);
-      const matchesSearch = displayName.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      const matchesSearch = displayName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             c.name.common.toLowerCase().includes(searchTerm.toLowerCase());
 
       const cCurrencies = c.currencies ? Object.values(c.currencies).map(cur => cur.name) : [];
@@ -74,26 +54,22 @@ function Home() {
 
       return matchesSearch && matchesCurrency && matchesLanguage;
     }).sort((a, b) => {
-      // Sort dynamically based on the translated name
       const nameA = getCountryName(a, i18n.language);
       const nameB = getCountryName(b, i18n.language);
       return nameA.localeCompare(nameB);
     });
   }, [countries, searchTerm, selectedCurrency, selectedLanguage, i18n.language]);
 
+  // Reset visible count when filters change
   useEffect(() => {
-    setCurrentPage(1);
+    setVisibleCount(ITEMS_PER_LOAD);
   }, [searchTerm, selectedCurrency, selectedLanguage]);
 
-  const totalPages = Math.ceil(filteredCountries.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentCountries = filteredCountries.slice(startIndex, startIndex + itemsPerPage);
+  const visibleCountries = filteredCountries.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredCountries.length;
 
-  const handlePageChange = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+  const handleShowMore = () => {
+    setVisibleCount(prev => prev + ITEMS_PER_LOAD);
   };
 
   const navItems = [
@@ -205,7 +181,7 @@ function Home() {
               : (
                 <>
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 w-full max-w-7xl mt-6">
-                    {currentCountries.map((country) => (
+                    {visibleCountries.map((country) => (
                       <Link key={country.cca3} to={`/details/${country.name.common.toLowerCase()}`} className="h-full block">
                         <Card className="bg-neutral-900/60 hover:bg-neutral-800 border-neutral-800/80 hover:border-neutral-700 transition-all duration-300 cursor-pointer h-full flex flex-col group text-white overflow-hidden p-0 gap-0 shadow-sm hover:shadow-lg rounded-2xl">
                           <div className="w-full h-40 overflow-hidden bg-neutral-950 shrink-0">
@@ -230,78 +206,21 @@ function Home() {
                     ))}
                   </div>
 
-                  {/* Pagination */}
-                  {totalPages > 1 && (
-                    <div className="mt-12 w-full max-w-4xl bg-neutral-900/40 p-4 rounded-2xl border border-neutral-800/60 shadow-sm">
-                      <Pagination>
-                        <PaginationContent className="flex-wrap justify-center gap-2">
-                          <PaginationItem className="cursor-pointer">
-                            <PaginationPrevious
-                              onClick={() => handlePageChange(currentPage - 1)}
-                              className={`text-neutral-400 hover:bg-neutral-800 hover:text-white transition-colors cursor-pointer rounded-lg ${currentPage === 1 ? 'opacity-50 pointer-events-none' : ''}`}
-                            />
-                          </PaginationItem>
-
-                          {currentPage > 2 && (
-                            <PaginationItem className="hidden sm:block cursor-pointer">
-                              <PaginationLink onClick={() => handlePageChange(1)} className="text-neutral-400 hover:bg-neutral-800 hover:text-white transition-colors cursor-pointer rounded-lg">
-                                1
-                              </PaginationLink>
-                            </PaginationItem>
-                          )}
-
-                          {currentPage > 3 && (
-                            <PaginationItem className="hidden sm:block">
-                              <PaginationEllipsis className="text-neutral-600" />
-                            </PaginationItem>
-                          )}
-
-                          {currentPage > 1 && (
-                            <PaginationItem className="cursor-pointer">
-                              <PaginationLink onClick={() => handlePageChange(currentPage - 1)} className="text-neutral-400 hover:bg-neutral-800 hover:text-white transition-colors cursor-pointer rounded-lg">
-                                {currentPage - 1}
-                              </PaginationLink>
-                            </PaginationItem>
-                          )}
-
-                          <PaginationItem className="cursor-default">
-                            <PaginationLink isActive className="bg-neutral-800 text-white hover:bg-neutral-700 hover:text-white border-neutral-700 font-medium rounded-lg shadow-sm">
-                              {currentPage}
-                            </PaginationLink>
-                          </PaginationItem>
-
-                          {currentPage < totalPages && (
-                            <PaginationItem className="cursor-pointer">
-                              <PaginationLink onClick={() => handlePageChange(currentPage + 1)} className="text-neutral-400 hover:bg-neutral-800 hover:text-white transition-colors cursor-pointer rounded-lg">
-                                {currentPage + 1}
-                              </PaginationLink>
-                            </PaginationItem>
-                          )}
-
-                          {currentPage < totalPages - 2 && (
-                            <PaginationItem className="hidden sm:block">
-                              <PaginationEllipsis className="text-neutral-600" />
-                            </PaginationItem>
-                          )}
-
-                          {currentPage < totalPages - 1 && (
-                            <PaginationItem className="hidden sm:block cursor-pointer">
-                              <PaginationLink onClick={() => handlePageChange(totalPages)} className="text-neutral-400 hover:bg-neutral-800 hover:text-white transition-colors cursor-pointer rounded-lg">
-                                {totalPages}
-                              </PaginationLink>
-                            </PaginationItem>
-                          )}
-
-                          <PaginationItem className="cursor-pointer">
-                            <PaginationNext
-                              onClick={() => handlePageChange(currentPage + 1)}
-                              className={`text-neutral-400 hover:bg-neutral-800 hover:text-white transition-colors cursor-pointer rounded-lg ${currentPage === totalPages ? 'opacity-50 pointer-events-none' : ''}`}
-                            />
-                          </PaginationItem>
-                        </PaginationContent>
-                      </Pagination>
+                  {/* Mostrar mais */}
+                  {hasMore && (
+                    <div className="mt-10 flex flex-col items-center gap-3">
+                      <p className="text-neutral-500 text-sm">
+                        {visibleCount} / {filteredCountries.length} {t('home.countries_shown', 'países')}
+                      </p>
+                      <button
+                        onClick={handleShowMore}
+                        className="px-8 py-3 rounded-xl font-semibold text-sm text-white bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 hover:border-neutral-600 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg cursor-pointer"
+                      >
+                        {t('home.show_more', 'Mostrar mais')}
+                      </button>
                     </div>
                   )}
+
                 </>
               )
             }
