@@ -164,9 +164,9 @@ const CardNav = ({
                 className={`card-nav ${isExpanded ? 'open' : ''} block h-[60px] p-0 rounded-xl shadow-md relative overflow-hidden will-change-[height]`}
                 style={{ backgroundColor: baseColor }}
             >
-                <div className="card-nav-top absolute inset-x-0 top-0 h-[60px] flex items-center justify-between p-2 pl-[1.1rem] z-[2]">
+                <div className="card-nav-top absolute inset-x-0 top-0 h-[60px] flex items-center justify-between p-2 pl-[1.1rem] z-[2] relative">
                     <div
-                        className={`hamburger-menu ${isHamburgerOpen ? 'open' : ''} group h-full flex flex-col items-center justify-center cursor-pointer gap-[6px] order-2 md:order-none`}
+                        className={`hamburger-menu ${isHamburgerOpen ? 'open' : ''} group h-full flex flex-col items-center justify-center cursor-pointer gap-[6px]`}
                         onClick={toggleMenu}
                         role="button"
                         aria-label={isExpanded ? 'Close menu' : 'Open menu'}
@@ -183,7 +183,7 @@ const CardNav = ({
                         />
                     </div>
 
-                    <div className="logo-container flex items-center gap-2 font-black tracking-tight md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 order-1 md:order-none" style={{ color: menuColor || '#000' }}>
+                    <div className="logo-container flex items-center gap-2 font-black tracking-tight absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" style={{ color: menuColor || '#000' }}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-globe">
                             <circle cx="12" cy="12" r="10"/>
                             <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
@@ -192,7 +192,7 @@ const CardNav = ({
                         <span className="text-xl">GeoWorld</span>
                     </div>
 
-                    <div className="flex items-center gap-2 order-3 ml-auto mr-2 md:absolute md:right-4 md:top-1/2 md:-translate-y-1/2 z-10" style={{ color: menuColor || '#000' }}>
+                    <div className="flex items-center gap-2 mr-2 z-10" style={{ color: menuColor || '#000' }}>
                         <span className="text-xs font-bold font-mono">PT</span>
                         <Switch 
                             checked={isEn} 
