@@ -1,9 +1,6 @@
 import { API_URL, HOME_FIELDS, BORDER_FIELDS } from '@/utils/constants';
 
 export const countriesService = {
-  /**
-   * Fetches all countries with specific fields optimized for the home list.
-   */
   getAllCountries: () => {
     return fetch(`${API_URL}/all?fields=${HOME_FIELDS}`)
       .then(res => {
@@ -15,9 +12,6 @@ export const countriesService = {
       });
   },
 
-  /**
-   * Fetches full country details by exact name.
-   */
   getCountryDetailsByName: (name) => {
     return fetch(`${API_URL}/name/${name}?fullText=true`)
       .then(res => {
@@ -29,9 +23,6 @@ export const countriesService = {
       });
   },
 
-  /**
-   * Fetches specific countries by their alpha codes (used for border countries).
-   */
   getBorderCountriesByCodes: (codesArray) => {
     const borderCodes = codesArray.join(',');
     return fetch(`${API_URL}/alpha?codes=${borderCodes}&fields=${BORDER_FIELDS}`)

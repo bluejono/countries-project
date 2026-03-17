@@ -1,10 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { countriesService } from '@/api/countriesService';
 
-/**
- * CountriesContext — provides all countries data globally,
- * so API calls originate from the App level and are shared across pages.
- */
 const CountriesContext = createContext(null);
 
 export function CountriesProvider({ children }) {

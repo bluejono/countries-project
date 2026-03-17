@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from "@/components/ui/card";
 import CardNav from '@/components/ui/CardNav';
