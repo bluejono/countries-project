@@ -13,6 +13,7 @@ import { getCountryName } from '@/utils/formatters';
 import Footer from '@/components/Footer/Footer';
 import NotFound from '@/components/NotFound/NotFound';
 import { Skeleton } from '@/components/ui/skeleton';
+import './Home.css';
 
 function Home() {
   const { t, i18n } = useTranslation();

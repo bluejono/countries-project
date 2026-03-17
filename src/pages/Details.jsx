@@ -11,6 +11,7 @@ import { countriesService } from '@/api/countriesService';
 import { getCountryName } from '@/utils/formatters';
 import Footer from '@/components/Footer/Footer';
 import { Skeleton } from '@/components/ui/skeleton';
+import './Details.css';
 
 function Details() {
   const { id } = useParams();
