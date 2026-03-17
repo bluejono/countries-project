@@ -1,21 +1,11 @@
-<h1 align="center">
-  <img src="public/favicon.svg" width="40" alt="GeoWorld logo" />
-  <br/>
-  GeoWorld
-</h1>
+# 🌍 GeoWorld
 
-<p align="center">
-  Explore informações detalhadas sobre todos os países do mundo.
-  <br/>
-  Filtre por moeda, idioma, busque por nome e veja detalhes como capital, população, fronteiras e muito mais.
-</p>
+Explore informações detalhadas sobre todos os países do mundo. Filtre por moeda, idioma, busque por nome e veja detalhes como capital, população, fronteiras e muito mais.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react&logoColor=white" />
-  <img src="https://img.shields.io/badge/Vite-7-646CFF?style=flat&logo=vite&logoColor=white" />
-  <img src="https://img.shields.io/badge/Tailwind-4-06B6D4?style=flat&logo=tailwindcss&logoColor=white" />
-  <img src="https://img.shields.io/badge/i18n-PT%20%7C%20EN-green?style=flat" />
-</p>
+![React](https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=flat&logo=vite&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind-4-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
+![i18n](https://img.shields.io/badge/i18n-PT%20%7C%20EN-green?style=flat)
 
 ---
 
@@ -58,7 +48,6 @@ src/
 ├── context/
 │   └── CountriesContext.jsx  # Context global com dados de todos os países
 ├── fonts/                    # Fontes Inter WOFF2 locais
-├── images/                   # Imagens do projeto
 ├── pages/
 │   ├── Details.jsx / .css    # Página de detalhes do país
 │   ├── Home.jsx / .css       # Página principal com lista e filtros
@@ -81,20 +70,13 @@ src/
 ### Instalação
 
 ```bash
-# Clone o repositório
 git clone https://github.com/bluejono/countries-project.git
 cd countries-project
-
-# Instale as dependências
 npm install
-
-# Configure as variáveis de ambiente
 cp .env.example .env
 ```
 
 ### Variáveis de ambiente
-
-Crie um arquivo `.env` na raiz do projeto (use o `.env.example` como base):
 
 ```env
 VITE_API_URL=https://restcountries.com/v3.1
@@ -131,6 +113,4 @@ Idiomas suportados: **Português (PT-BR)** e **Inglês (EN)**
 
 ---
 
-<p align="center">
-  Dados fornecidos por <a href="https://restcountries.com">REST Countries API</a>
-</p>
+Dados fornecidos por [REST Countries API](https://restcountries.com)
