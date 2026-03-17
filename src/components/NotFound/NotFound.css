@@ -1,0 +1,40 @@
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 5rem 2rem;
+  text-align: center;
+  animation: not-found-fade-in 0.4s ease;
+}
+
+.not-found__icon {
+  font-size: 4rem;
+  filter: grayscale(1) opacity(0.5);
+}
+
+.not-found__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e5e5e5;
+  margin: 0;
+}
+
+.not-found__description {
+  font-size: 0.9375rem;
+  color: #737373;
+  margin: 0;
+  max-width: 380px;
+}
+
+@keyframes not-found-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

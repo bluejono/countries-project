@@ -3,6 +3,8 @@ import { gsap } from 'gsap';
 import { Link } from 'react-router-dom';
 // use your own icon import if react-icons is not available
 import { GoArrowUpRight } from 'react-icons/go';
+import { useTranslation } from 'react-i18next';
+import { Switch } from '@/components/ui/switch';
 
 const CardNav = ({
     logo,
@@ -15,8 +17,21 @@ const CardNav = ({
     buttonBgColor,
     buttonTextColor
 }) => {
+    const { i18n } = useTranslation();
+    const isEn = i18n.language && i18n.language.startsWith('en');
+
+    const toggleLanguage = (checked) => {
+        i18n.changeLanguage(checked ? 'en' : 'pt');
+    };
+
     const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
+    
+    // We keep a ref to the expansion state so effects that trigger on `items` change 
+    // know if they should immediately jump the new animation to the expanded (progress = 1) state.
+    const isExpandedRef = useRef(isExpanded);
+    isExpandedRef.current = isExpanded;
+
     const navRef = useRef(null);
     const cardsRef = useRef([]);
     const tlRef = useRef(null);
@@ -78,6 +93,13 @@ const CardNav = ({
 
     useLayoutEffect(() => {
         const tl = createTimeline();
+        
+        // If the menu was already open and timeline recreated (e.g., from language switch changing items),
+        // we must immediately fast-forward it to the fully opened state to prevent the UI from getting stuck.
+        if (tl && isExpandedRef.current) {
+            tl.progress(1);
+        }
+
         tlRef.current = tl;
 
         return () => {
@@ -161,8 +183,24 @@ const CardNav = ({
                         />
                     </div>
 
-                    <div className="logo-container flex items-center md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 order-1 md:order-none">
-                        <img src={logo} alt={logoAlt} className="logo h-[28px]" />
+                    <div className="logo-container flex items-center gap-2 font-black tracking-tight md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 order-1 md:order-none" style={{ color: menuColor || '#000' }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-globe">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+                            <path d="M2 12h20"/>
+                        </svg>
+                        <span className="text-xl">GeoWorld</span>
+                    </div>
+
+                    <div className="flex items-center gap-2 order-3 ml-auto mr-2 md:absolute md:right-4 md:top-1/2 md:-translate-y-1/2 z-10" style={{ color: menuColor || '#000' }}>
+                        <span className="text-xs font-bold font-mono">PT</span>
+                        <Switch 
+                            checked={isEn} 
+                            onCheckedChange={toggleLanguage} 
+                            className="data-[state=checked]:bg-blue-600 data-[state=unchecked]:bg-green-600 cursor-pointer"
+                            title="Trocar Idioma"
+                        />
+                        <span className="text-xs font-bold font-mono">EN</span>
                     </div>
                 </div>
 
